@@ -4,6 +4,8 @@ import * as crypto from 'crypto'
 
 import { RegisterModel } from '../models/register'
 
+import registerSchema from '../schema/register';
+
 export default async (fastify: FastifyInstance) => {
 
   const registerModel = new RegisterModel();
@@ -18,7 +20,8 @@ export default async (fastify: FastifyInstance) => {
           return request.headers['x-real-ip'];
         }
       }
-    }
+    },
+    schema: registerSchema,
   }, async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username

@@ -22,7 +22,7 @@ const app = fastify({
 // Plugins
 app.register(require('@fastify/formbody'))
 app.register(require('@fastify/cors'), {
-  origin: ['https://r7.moph.go.th'],
+  origin: ['r7.moph.go.th'],
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
 })
 
@@ -30,8 +30,8 @@ app.register(require('@fastify/cors'), {
 app.register(import('@fastify/rate-limit'), {
   global: true,
   max: 100,
-  ban: 3,
   timeWindow: '10m', // 1h
+  ban: 3,
   keyGenerator: (request: any) => {
     return request.headers['x-real-ip'];
   }
@@ -76,7 +76,8 @@ app.register(require('./plugins/jwt'), {
 // routes
 app.register(require("./routes/health_check"), { prefix: '/health-check' })
 app.register(require("./routes/welcome"), { prefix: '/' })
-app.register(require("./routes/resources"), { prefix: '/resources' })
-app.register(require("./routes/schema"), { prefix: '/schema' })
+app.register(require("./routes/register"), { prefix: '/register' })
+// app.register(require("./routes/resources"), { prefix: '/resources' })
+// app.register(require("./routes/schema"), { prefix: '/schema' })
 
 export default app;
